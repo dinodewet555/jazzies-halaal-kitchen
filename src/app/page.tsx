@@ -232,7 +232,7 @@ export default function HomePage() {
                 id="getintouch-heading"
                 className="mt-3 text-balance text-3xl md:text-4xl lg:text-5xl"
               >
-                Hungry now? We're a phone call away.
+                Hungry now? We&apos;re a phone call away.
               </h2>
               <p className="mt-4 max-w-xl text-base text-ink-muted md:text-lg">
                 Order ahead by phone or WhatsApp. Cape Town based, family run,
