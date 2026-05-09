@@ -1,36 +1,132 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Jazzies Halaal Kitchen
 
-## Getting Started
+Production-ready Next.js 16 site for Jazzies Halaal Kitchen, a halaal Cape Malay
+eatery in Athlone, Cape Town. Five pages: Home, Menu, About, Catering, Contact.
+No ordering logic. Every CTA drives to a phone call, WhatsApp, or the contact
+form.
 
-First, run the development server:
+## Stack
+
+- **Next.js 16.2.4** (App Router, Turbopack default, React 19.2)
+- **TypeScript**
+- **Tailwind CSS v4** (`@theme` design tokens in `src/app/globals.css`)
+- **next/font** with Fraunces (display) and Inter (body)
+- **lucide-react** icons
+- **react-hook-form + zod** for the catering and contact forms
+- **next/og** for the share preview image
+
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000>.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build   # Turbopack production build
+npm run start   # Serve the built output
+npm run lint    # ESLint flat config
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> Heads up: `next dev` and `next build` no longer run linting. Run `npm run lint`
+> separately, or wire it into CI.
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+  app/
+    api/
+      catering-enquiry/route.ts   # placeholder POST handler (logs to console)
+      contact/route.ts            # placeholder POST handler (logs to console)
+    about/page.tsx
+    catering/page.tsx
+    contact/page.tsx
+    menu/page.tsx
+    layout.tsx                    # root layout, fonts, header/footer, OG metadata
+    page.tsx                      # homepage
+    sitemap.ts
+    robots.ts
+    opengraph-image.tsx           # generated 1200x630 share image
+    not-found.tsx
+    globals.css                   # Tailwind v4 + brand theme tokens
+  components/
+    forms/                        # CateringEnquiryForm, ContactForm, Field
+    layout/                       # Header, Footer, StickyMobileBar
+    marketing/                    # Hero, TrustBar, HalaalBadge, MenuItemCard, etc.
+    ui/                           # Button, WhatsAppButton, CallButton, MapEmbed
+  data/
+    menu.ts                       # 30+ Cape Malay items with categories
+    site-config.ts                # phone, address, hours, certification, social
+  lib/
+    schemas/                      # Zod schemas for forms
+    utils/                        # cn(), tel/whatsapp link builders, ZAR formatter
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Before launch checklist (TODOs for Dino)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Search the codebase for `TODO (Dino)` to find every spot that needs attention.
+The big ones:
 
-## Deploy on Vercel
+1. **Phone numbers** in `src/data/site-config.ts` (`contact.phone`,
+   `contact.phoneDigits`, `contact.whatsapp`, `contact.whatsappDigits`).
+2. **Address and Google Maps URL** in `src/data/site-config.ts`.
+3. **Trading hours** in `src/data/site-config.ts` (`hours`, `hoursSummary`).
+4. **MJC certification number** in `src/data/site-config.ts`
+   (`certification.number`).
+5. **Social media URLs** (Instagram, Facebook).
+6. **Email address** for general enquiries.
+7. **Origin story copy** in `src/app/about/page.tsx` (look for the TODO comment).
+8. **Real food photography** — replace Unsplash placeholders in
+   `src/data/menu.ts` and the hero/heritage/catering images on each page. Drop
+   real photos into `public/images/` and update the paths.
+9. **Form submissions** — `src/app/api/catering-enquiry/route.ts` and
+   `src/app/api/contact/route.ts` currently log to the server console only.
+   Wire one of:
+   - [Resend](https://resend.com) for transactional email
+   - [Formspree](https://formspree.io) or [Web3Forms](https://web3forms.com)
+   - A Google Sheet / Airtable via their API
+10. **Site URL** — set `NEXT_PUBLIC_SITE_URL` (or update
+    `siteConfig.url` in `src/data/site-config.ts`) once the production domain
+    is live.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Environment variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See `.env.local.example`. None are required for the site to run locally with
+placeholder data, but at least the form provider key will be needed before
+launch.
+
+## SEO
+
+- Metadata API on every page (title template, description, canonical, OG, Twitter).
+- JSON-LD on every page:
+  - `Organization` in the root layout
+  - `Restaurant` on the homepage
+  - `Menu` on `/menu`
+  - `LocalBusiness` on `/contact`
+  - `BreadcrumbList` on every sub-page
+- `sitemap.xml` generated by `src/app/sitemap.ts`.
+- `robots.txt` generated by `src/app/robots.ts` (disallows `/api/`).
+- 1200x630 OG share image generated by `src/app/opengraph-image.tsx`.
+- Theme color and viewport set via the `viewport` export in the root layout.
+
+## Accessibility
+
+- Skip-to-main-content link.
+- Focus rings on all interactive elements (`:focus-visible` in `globals.css`).
+- Mobile drawer is keyboard reachable, body scroll-locked while open, closes on
+  navigation.
+- Form fields have associated labels, hints, error messages, and `aria-invalid`
+  states.
+- All decorative icons have `aria-hidden`. Icon-only buttons have `aria-label`.
+
+## Deployment notes
+
+- Designed to deploy on Vercel with zero config (`next build` then `next start`,
+  or just push the repo). All five routes are statically generated.
+- `next.config.ts` allows `images.unsplash.com` so the placeholder food photos
+  resolve. Once you swap in real photos under `public/images/`, you can remove
+  the `remotePatterns` entry.
+- If you self-host: Node 20.9+ is required (Next.js 16 minimum).

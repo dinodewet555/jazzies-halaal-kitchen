@@ -1,65 +1,235 @@
 import Image from "next/image";
+import { ArrowRight, MapPin, Clock } from "lucide-react";
+import { Hero } from "@/components/marketing/Hero";
+import { TrustBar } from "@/components/marketing/TrustBar";
+import { HalaalBadge } from "@/components/marketing/HalaalBadge";
+import { SectionHeading } from "@/components/marketing/SectionHeading";
+import { FeaturedDishCard } from "@/components/marketing/FeaturedDishCard";
+import { Button } from "@/components/ui/Button";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { CallButton } from "@/components/ui/CallButton";
+import { MapEmbed } from "@/components/ui/MapEmbed";
+import { siteConfig } from "@/data/site-config";
+import { getFeatured } from "@/data/menu";
 
-export default function Home() {
+const HERO_IMAGE =
+  "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=2200&q=70";
+const HERITAGE_IMAGE =
+  "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1600&q=70";
+const CATERING_IMAGE =
+  "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=2200&q=70";
+
+export default function HomePage() {
+  const featured = getFeatured(6);
+
+  const restaurantJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "@id": `${siteConfig.url}/#restaurant`,
+    name: siteConfig.name,
+    description: siteConfig.shortDescription,
+    url: siteConfig.url,
+    telephone: siteConfig.contact.phoneDigits,
+    email: siteConfig.contact.email,
+    priceRange: siteConfig.priceRange,
+    servesCuisine: [...siteConfig.servesCuisine],
+    image: HERO_IMAGE,
+    hasMenu: `${siteConfig.url}/menu`,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: siteConfig.address.street,
+      addressLocality: siteConfig.address.suburb,
+      addressRegion: siteConfig.address.province,
+      postalCode: siteConfig.address.postalCode,
+      addressCountry: siteConfig.address.countryCode,
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: siteConfig.address.geo.latitude,
+      longitude: siteConfig.address.geo.longitude,
+    },
+    openingHoursSpecification: siteConfig.hours
+      .filter((h) => h.openTime && h.closeTime)
+      .map((h) => ({
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: h.day,
+        opens: h.openTime,
+        closes: h.closeTime,
+      })),
+    sameAs: [siteConfig.social.instagram, siteConfig.social.facebook],
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <Hero
+        imageSrc={HERO_IMAGE}
+        imageAlt="Aromatic Cape Malay breyani served with sambals"
+        priority
+        badge={<HalaalBadge variant="ghost" />}
+        eyebrow="Cape Malay since the start"
+        heading="Cape Town's Home of Soulful Halaal Cooking"
+        subheading="Cape Malay classics, family recipes, and halaal comfort food, made the way grandmothers made them."
+        actions={
+          <>
+            <Button href="/menu" variant="primary" size="lg">
+              View our menu
+            </Button>
+            <WhatsAppButton size="lg" label="WhatsApp to order" />
+          </>
+        }
+      />
+
+      <TrustBar />
+
+      <section className="container-prose py-16 md:py-24" aria-labelledby="favourites-heading">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <SectionHeading
+            eyebrow="Family Favourites"
+            title="The dishes our regulars come back for"
+            description="Every plate is cooked from scratch, in the kind of pots that have been in the kitchen for years."
+          />
+          <Button href="/menu" variant="ghost" size="md" className="hidden md:inline-flex">
+            See full menu
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Button>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+
+        <h2 id="favourites-heading" className="sr-only">
+          Family favourites
+        </h2>
+
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {featured.map((item) => (
+            <FeaturedDishCard key={item.id} item={item} />
+          ))}
+        </div>
+
+        <div className="mt-8 md:hidden">
+          <Button href="/menu" variant="outline" size="lg" className="w-full">
+            See full menu
+          </Button>
+        </div>
+      </section>
+
+      <section className="border-y border-edge bg-cream-warm">
+        <div className="container-prose grid gap-10 py-16 md:grid-cols-2 md:items-center md:py-24">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-edge md:aspect-square">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src={HERITAGE_IMAGE}
+              alt="Cape Malay home cooking, hands working over a pot of curry"
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+          <div>
+            <SectionHeading
+              eyebrow="Our heritage"
+              title="Recipes that travelled four generations to land on your plate"
+              description="Cape Malay cooking carries the story of the Cape: spice routes, Sunday lunches with the whole family, and grandmothers who measured by hand. Jazzies cooks the way they cooked, and we feed people the way they fed people."
+            />
+            <Button href="/about" variant="outline" size="lg" className="mt-7">
+              Read our story
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Button>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="container-prose py-16 md:py-24">
+        <div className="relative isolate overflow-hidden rounded-2xl">
+          <Image
+            src={CATERING_IMAGE}
+            alt="Catering platter of Cape Malay dishes laid out for guests"
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-brand-dark/90 via-emerald-brand-dark/70 to-emerald-brand-dark/40" aria-hidden="true" />
+          <div className="relative z-10 max-w-xl px-6 py-16 text-cream md:px-12 md:py-24">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-saffron-soft">
+              Catering
+            </p>
+            <h2 className="mt-3 text-balance text-3xl md:text-5xl">
+              Catering for every occasion
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-cream/90 md:text-lg">
+              Weddings, aqeeqahs, janazah meals, madrasah functions, corporate
+              lunches, Ramadan iftars. Big breyani pots and full buffet setups,
+              cooked with the same care we put into a single plate.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button href="/catering" variant="secondary" size="lg">
+                Enquire about catering
+              </Button>
+              <WhatsAppButton size="lg" message={siteConfig.ctaMessages.cateringEnquiry} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="container-prose pb-20 md:pb-28" aria-labelledby="visit-heading">
+        <SectionHeading
+          eyebrow="Visit us"
+          title="Find us in Athlone"
+          description="Walk-in tables, takeaway, or call ahead. We're easiest to find on the corner."
+        />
+
+        <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_1fr]">
+          <MapEmbed className="aspect-[4/3] lg:aspect-auto lg:min-h-[420px]" />
+
+          <div className="rounded-2xl border border-edge bg-white p-7 md:p-9">
+            <h2 id="visit-heading" className="sr-only">
+              Visit us
+            </h2>
+
+            <dl className="space-y-6">
+              <div className="flex items-start gap-3">
+                <MapPin className="mt-1 h-5 w-5 shrink-0 text-emerald-brand" aria-hidden="true" />
+                <div>
+                  <dt className="text-sm font-semibold text-ink">Address</dt>
+                  <dd className="mt-1 text-sm text-ink-muted">
+                    {siteConfig.address.formatted}
+                  </dd>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Clock className="mt-1 h-5 w-5 shrink-0 text-emerald-brand" aria-hidden="true" />
+                <div>
+                  <dt className="text-sm font-semibold text-ink">Trading hours</dt>
+                  <dd className="mt-1 text-sm text-ink-muted">
+                    {siteConfig.hoursSummary}
+                  </dd>
+                </div>
+              </div>
+            </dl>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button
+                href={siteConfig.address.googleMapsUrl}
+                external
+                variant="primary"
+                size="lg"
+                className="flex-1"
+              >
+                Get directions
+              </Button>
+              <CallButton size="lg" variant="outline" className="flex-1" />
+            </div>
+            <div className="mt-3">
+              <WhatsAppButton size="lg" className="w-full" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(restaurantJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+    </>
   );
 }
