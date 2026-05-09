@@ -91,9 +91,9 @@ export default function AboutPage() {
                 needs.
               </p>
               <p>
-                Today the kitchen is run by the second generation, with the
-                third already learning the timing on the breyani pot. The menu
-                has grown but the standard hasn&apos;t moved. We still make samoosas
+                Today the kitchen is run by Jasmine, with the next generation
+                already learning the timing on the breyani pot. The menu has
+                grown but the standard hasn&apos;t moved. We still make samoosas
                 by hand. We still cook the dhal from dry beans.
               </p>
             </div>

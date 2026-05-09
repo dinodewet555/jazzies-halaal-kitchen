@@ -148,7 +148,7 @@ export function Header() {
             <CallButton size="lg" variant="outline" />
           </div>
           <p className="mt-4 text-sm text-ink-muted">
-            {siteConfig.address.formatted}
+            {siteConfig.address.display}
           </p>
           <p className="text-sm text-ink-muted">{siteConfig.hoursSummary}</p>
         </div>

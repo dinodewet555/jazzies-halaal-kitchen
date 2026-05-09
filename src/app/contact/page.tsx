@@ -3,19 +3,18 @@ import { MapPin, Phone, MessageCircle, Mail, Clock } from "lucide-react";
 import { InstagramIcon, FacebookIcon } from "@/components/ui/SocialIcons";
 import { SectionHeading } from "@/components/marketing/SectionHeading";
 import { ContactForm } from "@/components/forms/ContactForm";
-import { MapEmbed } from "@/components/ui/MapEmbed";
 import { Button } from "@/components/ui/Button";
 import { siteConfig } from "@/data/site-config";
 import { buildTelLink, buildWhatsAppLink } from "@/lib/utils/format";
 
 export const metadata: Metadata = {
-  title: "Contact and Visit",
+  title: "Contact",
   description:
-    "Visit Jazzies Halaal Kitchen in Athlone, Cape Town. Phone, WhatsApp, email, and trading hours.",
+    "Phone, WhatsApp, email, and trading hours for Jazzies Halaal Kitchen. Cape Town based, halaal certified by the MJC.",
   alternates: { canonical: "/contact" },
   openGraph: {
     title: `Contact | ${siteConfig.name}`,
-    description: "Find us in Athlone. Call, WhatsApp, or send a message.",
+    description: "Cape Town based. Call, WhatsApp, or send a message.",
     url: `${siteConfig.url}/contact`,
   },
 };
@@ -30,6 +29,8 @@ export default function ContactPage() {
     ],
   };
 
+  // LocalBusiness schema intentionally omits street address and geo
+  // coordinates per the brand decision not to surface a specific location.
   const localBusinessJsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -42,16 +43,9 @@ export default function ContactPage() {
     priceRange: siteConfig.priceRange,
     address: {
       "@type": "PostalAddress",
-      streetAddress: siteConfig.address.street,
-      addressLocality: siteConfig.address.suburb,
+      addressLocality: siteConfig.address.city,
       addressRegion: siteConfig.address.province,
-      postalCode: siteConfig.address.postalCode,
       addressCountry: siteConfig.address.countryCode,
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: siteConfig.address.geo.latitude,
-      longitude: siteConfig.address.geo.longitude,
     },
     openingHoursSpecification: siteConfig.hours
       .filter((h) => h.openTime && h.closeTime)
@@ -70,8 +64,8 @@ export default function ContactPage() {
         <div className="container-prose py-14 md:py-20">
           <SectionHeading
             eyebrow="Get in touch"
-            title="Come and eat with us in Athlone"
-            description="Walk-in tables, takeaway orders, and large catering bookings. We answer fastest on phone or WhatsApp."
+            title="Cape Town based, family run"
+            description="Phone, WhatsApp, email, or the form below. We answer fastest on phone or WhatsApp."
           />
         </div>
       </header>
@@ -86,18 +80,10 @@ export default function ContactPage() {
                 <li className="flex items-start gap-3">
                   <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-emerald-brand" aria-hidden="true" />
                   <div>
-                    <p className="font-semibold text-ink">Address</p>
+                    <p className="font-semibold text-ink">Location</p>
                     <p className="mt-0.5 text-ink-muted">
-                      {siteConfig.address.formatted}
+                      {siteConfig.address.display}
                     </p>
-                    <a
-                      href={siteConfig.address.googleMapsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-1 inline-block text-sm font-semibold text-emerald-brand underline-offset-2 hover:underline"
-                    >
-                      Get directions
-                    </a>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
@@ -202,13 +188,6 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
-      </section>
-
-      <section aria-labelledby="map-heading" className="container-prose pb-20 md:pb-24">
-        <h2 id="map-heading" className="sr-only">
-          Map
-        </h2>
-        <MapEmbed className="h-[420px] md:h-[520px]" />
       </section>
 
       <script

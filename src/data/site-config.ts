@@ -1,5 +1,5 @@
-// TODO (Dino): Replace placeholder phone numbers, address, hours, social URLs,
-// MJC certification number, and any other field marked PLACEHOLDER before launch.
+// TODO (Dino): Replace remaining placeholder fields (address, MJC cert number,
+// social URLs, hours) before launch. Phone, WhatsApp, email, and owner are live.
 
 export const siteConfig = {
   name: "Jazzies Halaal Kitchen",
@@ -11,28 +11,30 @@ export const siteConfig = {
     "Jazzies Halaal Kitchen is a family-run halaal eatery rooted in Cape Malay tradition. We serve the dishes our grandmothers cooked, made fresh daily with halaal-certified ingredients and the kind of patience that only family kitchens have.",
   url: "https://jazzieshalaalkitchen.co.za", // PLACEHOLDER
 
-  contact: {
-    phone: "+27 21 555 0123", // PLACEHOLDER
-    phoneDigits: "+27215550123",
-    whatsapp: "+27 82 555 0123", // PLACEHOLDER
-    whatsappDigits: "27825550123",
-    email: "hello@jazzieshalaalkitchen.co.za", // PLACEHOLDER
+  owner: {
+    name: "Jasmine",
+    role: "Owner and head of kitchen",
   },
 
+  contact: {
+    phone: "+27 78 544 4220",
+    phoneDigits: "+27785444220",
+    whatsapp: "+27 78 544 4220",
+    whatsappDigits: "27785444220",
+    email: "jazzkitchencpt@gmail.com",
+  },
+
+  // Public-facing location is intentionally vague: "Cape Town, South Africa".
+  // The kitchen is in Surrey Estate but we do not surface the specific area,
+  // street address, map embeds, or driving directions anywhere on the site.
   address: {
-    street: "12 Klipfontein Road", // PLACEHOLDER
-    suburb: "Athlone",
     city: "Cape Town",
     province: "Western Cape",
-    postalCode: "7764",
     country: "South Africa",
     countryCode: "ZA",
-    formatted: "12 Klipfontein Road, Athlone, Cape Town, 7764", // PLACEHOLDER
-    googleMapsUrl: "https://maps.google.com/?q=Athlone+Cape+Town", // PLACEHOLDER
-    geo: {
-      latitude: -33.9633, // PLACEHOLDER (approx Athlone)
-      longitude: 18.5167,
-    },
+    display: "Cape Town, South Africa",
+    // Kept for the owner's records only. Never render this anywhere.
+    privateSuburb: "Surrey Estate",
   },
 
   hours: [

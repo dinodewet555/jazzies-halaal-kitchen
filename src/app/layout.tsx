@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { siteConfig } from "@/data/site-config";
@@ -11,12 +11,6 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-fraunces",
-  axes: ["SOFT", "opsz"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -75,7 +69,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0F5132",
+  themeColor: "#1A1A1A",
   colorScheme: "light",
 };
 
@@ -103,7 +97,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-ZA"
-      className={`${inter.variable} ${fraunces.variable} h-full`}
+      className={`${inter.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-cream text-ink">
         <a

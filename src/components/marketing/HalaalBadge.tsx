@@ -8,11 +8,15 @@ interface HalaalBadgeProps {
   showCertNumber?: boolean;
 }
 
+// The halaal badge keeps its heritage green (--color-halaal) regardless of the
+// rest of the brand palette. Green is the universal halaal signal and the
+// badge is the one place where that recognition matters more than visual
+// consistency with the rest of the site.
 export function HalaalBadge({ variant = "solid", className, showCertNumber = false }: HalaalBadgeProps) {
   const styles = {
-    solid: "bg-emerald-brand text-cream",
-    soft: "bg-cream text-emerald-brand border border-emerald-brand/20",
-    ghost: "bg-white/85 text-emerald-brand backdrop-blur",
+    solid: "bg-halaal text-cream",
+    soft: "bg-cream text-halaal border border-halaal/20",
+    ghost: "bg-white/85 text-halaal backdrop-blur",
   } as const;
 
   return (

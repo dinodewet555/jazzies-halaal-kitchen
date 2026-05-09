@@ -1,5 +1,14 @@
 import Image from "next/image";
-import { ArrowRight, MapPin, Clock } from "lucide-react";
+import {
+  ArrowRight,
+  Clock,
+  Heart,
+  Flower2,
+  Building2,
+  GraduationCap,
+  Moon,
+  Cake,
+} from "lucide-react";
 import { Hero } from "@/components/marketing/Hero";
 import { TrustBar } from "@/components/marketing/TrustBar";
 import { HalaalBadge } from "@/components/marketing/HalaalBadge";
@@ -8,20 +17,28 @@ import { FeaturedDishCard } from "@/components/marketing/FeaturedDishCard";
 import { Button } from "@/components/ui/Button";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { CallButton } from "@/components/ui/CallButton";
-import { MapEmbed } from "@/components/ui/MapEmbed";
 import { siteConfig } from "@/data/site-config";
 import { getFeatured } from "@/data/menu";
 
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=2200&q=70";
-const HERITAGE_IMAGE =
-  "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1600&q=70";
-const CATERING_IMAGE =
-  "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=2200&q=70";
+const HERO_IMAGE = "/images/chicken-breyani.jpg";
+const HERO_VIDEO = "/video/Jazzies-halaal-kitchen.mp4";
+const HERITAGE_IMAGE = "/images/jazz-featured.jpg";
+const CATERING_IMAGE = "/images/chicken-half-grilled-meal.jpg";
+
+const cateringOccasions = [
+  { icon: Heart, label: "Weddings" },
+  { icon: Flower2, label: "Aqeeqahs" },
+  { icon: Moon, label: "Ramadan iftars" },
+  { icon: Building2, label: "Corporate" },
+  { icon: GraduationCap, label: "Madrasah" },
+  { icon: Cake, label: "Birthdays" },
+];
 
 export default function HomePage() {
   const featured = getFeatured(6);
 
+  // JSON-LD intentionally omits street address and geo coordinates per the
+  // brand decision not to publish a specific location.
   const restaurantJsonLd = {
     "@context": "https://schema.org",
     "@type": "Restaurant",
@@ -33,20 +50,13 @@ export default function HomePage() {
     email: siteConfig.contact.email,
     priceRange: siteConfig.priceRange,
     servesCuisine: [...siteConfig.servesCuisine],
-    image: HERO_IMAGE,
+    image: `${siteConfig.url}${HERO_IMAGE}`,
     hasMenu: `${siteConfig.url}/menu`,
     address: {
       "@type": "PostalAddress",
-      streetAddress: siteConfig.address.street,
-      addressLocality: siteConfig.address.suburb,
+      addressLocality: siteConfig.address.city,
       addressRegion: siteConfig.address.province,
-      postalCode: siteConfig.address.postalCode,
       addressCountry: siteConfig.address.countryCode,
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: siteConfig.address.geo.latitude,
-      longitude: siteConfig.address.geo.longitude,
     },
     openingHoursSpecification: siteConfig.hours
       .filter((h) => h.openTime && h.closeTime)
@@ -63,7 +73,8 @@ export default function HomePage() {
     <>
       <Hero
         imageSrc={HERO_IMAGE}
-        imageAlt="Aromatic Cape Malay breyani served with sambals"
+        videoSrc={HERO_VIDEO}
+        imageAlt="Aromatic Cape Malay chicken breyani served with sambals"
         priority
         badge={<HalaalBadge variant="ghost" />}
         eyebrow="Cape Malay since the start"
@@ -111,12 +122,13 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Heritage strip */}
       <section className="border-y border-edge bg-cream-warm">
         <div className="container-prose grid gap-10 py-16 md:grid-cols-2 md:items-center md:py-24">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-edge md:aspect-square">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-edge md:aspect-[4/5]">
             <Image
               src={HERITAGE_IMAGE}
-              alt="Cape Malay home cooking, hands working over a pot of curry"
+              alt="A spread of Jazzies dishes laid out on a wooden table: bobotie, chicken akhni, half grilled chicken, masala steak gatsby, yellow rice, and sambals"
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
               className="object-cover"
@@ -136,89 +148,119 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="container-prose py-16 md:py-24">
-        <div className="relative isolate overflow-hidden rounded-2xl">
-          <Image
-            src={CATERING_IMAGE}
-            alt="Catering platter of Cape Malay dishes laid out for guests"
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-emerald-brand-dark/90 via-emerald-brand-dark/70 to-emerald-brand-dark/40" aria-hidden="true" />
-          <div className="relative z-10 max-w-xl px-6 py-16 text-cream md:px-12 md:py-24">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-saffron-soft">
-              Catering
-            </p>
-            <h2 className="mt-3 text-balance text-3xl md:text-5xl">
-              Catering for every occasion
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-cream/90 md:text-lg">
-              Weddings, aqeeqahs, janazah meals, madrasah functions, corporate
-              lunches, Ramadan iftars. Big breyani pots and full buffet setups,
-              cooked with the same care we put into a single plate.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button href="/catering" variant="secondary" size="lg">
-                Enquire about catering
-              </Button>
-              <WhatsAppButton size="lg" message={siteConfig.ctaMessages.cateringEnquiry} />
+      {/* Catering CTA — redesigned */}
+      <section className="container-prose py-16 md:py-24" aria-labelledby="catering-heading">
+        <div className="overflow-hidden rounded-2xl bg-emerald-brand-dark text-cream">
+          <div className="grid md:grid-cols-[1.05fr_1fr]">
+            <div className="relative aspect-[4/3] md:aspect-auto md:min-h-[560px]">
+              <Image
+                src={CATERING_IMAGE}
+                alt="Half chicken grilled meal plated with chips, salad, and dhania chutney"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-emerald-brand-dark/60 md:bg-gradient-to-l md:via-transparent md:to-emerald-brand-dark/95"
+              />
+            </div>
+
+            <div className="flex flex-col justify-center p-8 md:p-12 lg:p-14">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-saffron-soft">
+                Catering
+              </p>
+              <h2
+                id="catering-heading"
+                className="mt-4 text-balance text-4xl leading-[1.05] md:text-5xl lg:text-6xl"
+              >
+                Catering for{" "}
+                <span className="font-display-italic text-saffron-soft">
+                  every
+                </span>{" "}
+                occasion
+              </h2>
+              <p className="mt-5 max-w-md text-base leading-relaxed text-cream/85 md:text-lg">
+                Big breyani pots, full buffet setups, dessert tables. From an
+                aqeeqah lunch to a wedding for four hundred, cooked with the
+                same care we put into a single plate.
+              </p>
+
+              <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+                {cateringOccasions.map(({ icon: Icon, label }) => (
+                  <li
+                    key={label}
+                    className="flex items-center gap-2.5 text-cream/85"
+                  >
+                    <span className="grid h-7 w-7 place-items-center rounded-full bg-cream/10 text-saffron-soft">
+                      <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                    </span>
+                    <span>{label}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-9 flex flex-wrap gap-3">
+                <Button href="/catering" variant="secondary" size="lg">
+                  Enquire about catering
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Button>
+                <WhatsAppButton
+                  size="lg"
+                  message={siteConfig.ctaMessages.cateringEnquiry}
+                />
+              </div>
+
+              <p className="mt-5 text-xs text-cream/55">
+                Replies within one working day.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="container-prose pb-20 md:pb-28" aria-labelledby="visit-heading">
-        <SectionHeading
-          eyebrow="Visit us"
-          title="Find us in Athlone"
-          description="Walk-in tables, takeaway, or call ahead. We're easiest to find on the corner."
-        />
-
-        <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_1fr]">
-          <MapEmbed className="aspect-[4/3] lg:aspect-auto lg:min-h-[420px]" />
-
-          <div className="rounded-2xl border border-edge bg-white p-7 md:p-9">
-            <h2 id="visit-heading" className="sr-only">
-              Visit us
-            </h2>
-
-            <dl className="space-y-6">
-              <div className="flex items-start gap-3">
-                <MapPin className="mt-1 h-5 w-5 shrink-0 text-emerald-brand" aria-hidden="true" />
-                <div>
-                  <dt className="text-sm font-semibold text-ink">Address</dt>
-                  <dd className="mt-1 text-sm text-ink-muted">
-                    {siteConfig.address.formatted}
-                  </dd>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <Clock className="mt-1 h-5 w-5 shrink-0 text-emerald-brand" aria-hidden="true" />
-                <div>
-                  <dt className="text-sm font-semibold text-ink">Trading hours</dt>
-                  <dd className="mt-1 text-sm text-ink-muted">
-                    {siteConfig.hoursSummary}
-                  </dd>
-                </div>
-              </div>
-            </dl>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button
-                href={siteConfig.address.googleMapsUrl}
-                external
-                variant="primary"
-                size="lg"
-                className="flex-1"
+      {/* Get in touch — replaces "Visit us in Athlone" since we don't surface a
+          specific location publicly. */}
+      <section className="container-prose pb-20 md:pb-28" aria-labelledby="getintouch-heading">
+        <div className="rounded-2xl border border-edge bg-white p-8 md:p-12">
+          <div className="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-terracotta">
+                Cape Town based
+              </p>
+              <h2
+                id="getintouch-heading"
+                className="mt-3 text-balance text-3xl md:text-4xl lg:text-5xl"
               >
-                Get directions
-              </Button>
-              <CallButton size="lg" variant="outline" className="flex-1" />
+                Hungry now? We're a phone call away.
+              </h2>
+              <p className="mt-4 max-w-xl text-base text-ink-muted md:text-lg">
+                Order ahead by phone or WhatsApp. Cape Town based, family run,
+                halaal certified.
+              </p>
+
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <CallButton size="lg" variant="primary" />
+                <WhatsAppButton size="lg" />
+              </div>
             </div>
-            <div className="mt-3">
-              <WhatsAppButton size="lg" className="w-full" />
+
+            <div className="rounded-2xl bg-cream-warm p-6 md:p-7">
+              <div className="flex items-center gap-2.5 text-sm font-semibold uppercase tracking-[0.16em] text-ink-muted">
+                <Clock className="h-4 w-4" aria-hidden="true" />
+                Trading hours
+              </div>
+              <ul className="mt-5 divide-y divide-edge text-sm">
+                {siteConfig.hours.map((row) => (
+                  <li
+                    key={row.day}
+                    className="flex items-baseline justify-between gap-3 py-2.5"
+                  >
+                    <span className="font-medium text-ink">{row.day}</span>
+                    <span className="text-ink-muted">{row.display}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>

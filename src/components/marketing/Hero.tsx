@@ -5,6 +5,13 @@ import { cn } from "@/lib/utils/cn";
 interface HeroProps {
   imageSrc: string;
   imageAlt: string;
+  /**
+   * Optional looping background video. When provided, the video plays
+   * (autoplay, muted, loop, playsInline) over the image, which acts as the
+   * poster fallback.
+   */
+  videoSrc?: string;
+  videoType?: string;
   eyebrow?: string;
   heading: string;
   subheading?: string;
@@ -17,6 +24,8 @@ interface HeroProps {
 export function Hero({
   imageSrc,
   imageAlt,
+  videoSrc,
+  videoType = "video/mp4",
   eyebrow,
   heading,
   subheading,
@@ -38,14 +47,41 @@ export function Hero({
         heightClass
       )}
     >
-      <Image
-        src={imageSrc}
-        alt={imageAlt}
-        fill
-        priority={priority}
-        sizes="100vw"
-        className="object-cover"
-      />
+      {videoSrc ? (
+        <>
+          {/* Poster image renders immediately, before the video can load. */}
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            fill
+            priority={priority}
+            sizes="100vw"
+            className="object-cover"
+          />
+          <video
+            src={videoSrc}
+            poster={imageSrc}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover"
+          >
+            <source src={videoSrc} type={videoType} />
+          </video>
+        </>
+      ) : (
+        <Image
+          src={imageSrc}
+          alt={imageAlt}
+          fill
+          priority={priority}
+          sizes="100vw"
+          className="object-cover"
+        />
+      )}
       <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/40 to-ink/10" aria-hidden="true" />
 
       <div className="container-prose relative z-10 w-full pb-12 pt-32 md:pb-16 md:pt-24">

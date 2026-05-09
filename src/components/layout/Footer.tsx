@@ -32,11 +32,11 @@ export function Footer() {
         </div>
 
         <div>
-          <h2 className="font-display text-base font-semibold text-cream">Visit us</h2>
+          <h2 className="font-display text-base font-semibold text-cream">Get in touch</h2>
           <ul className="mt-4 space-y-3 text-sm text-cream/80">
             <li className="flex items-start gap-2.5">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-saffron-soft" aria-hidden="true" />
-              <span>{siteConfig.address.formatted}</span>
+              <span>{siteConfig.address.display}</span>
             </li>
             <li className="flex items-start gap-2.5">
               <Phone className="mt-0.5 h-4 w-4 shrink-0 text-saffron-soft" aria-hidden="true" />

@@ -1,12 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --color-emerald-brand: #0F5132;
-  --color-emerald-brand-dark: #0A3A24;
+  /* Primary palette is now charcoal-led for an edgier, modern restaurant feel.
+     The token names (emerald-brand / emerald-brand-dark) are kept for backward
+     compatibility with class strings across the codebase, but the colours are
+     no longer green. The actual heritage halaal-green is reserved for the
+     HalaalBadge via --color-halaal. */
+  --color-emerald-brand: #1A1A1A;
+  --color-emerald-brand-dark: #0A0A0A;
+  --color-halaal: #0F5132;
+  --color-halaal-deep: #0A3A24;
+
   --color-terracotta: #C2410C;
   --color-terracotta-soft: #E2632B;
   --color-saffron: #D97706;
   --color-saffron-soft: #F0A830;
+
   --color-ink: #1C1917;
   --color-ink-muted: #57534E;
   --color-cream: #FAF7F2;
@@ -17,7 +26,7 @@
   --color-foreground: #1C1917;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
   --radius-xl: 0.875rem;
   --radius-2xl: 1.25rem;
@@ -46,8 +55,8 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
-    font-weight: 600;
-    letter-spacing: -0.01em;
+    font-weight: 700;
+    letter-spacing: -0.025em;
     color: var(--color-ink);
   }
 
@@ -78,6 +87,11 @@
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  .font-display-italic {
+    font-family: var(--font-display);
+    font-style: italic;
   }
 
   .scrollbar-hide::-webkit-scrollbar {
