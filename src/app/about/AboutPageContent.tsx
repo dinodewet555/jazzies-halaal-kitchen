@@ -108,7 +108,7 @@ export function AboutPageContent() {
       {/* Origin */}
       <section className="section-spacing bg-cream">
         <div className="container-prose">
-          <ScrollReveal direction="up">
+          <GSAPReveal direction="up">
             <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.2fr_1fr] md:items-center">
               <div>
                 <SectionHeading
@@ -124,7 +124,7 @@ export function AboutPageContent() {
                   </p>
                 </div>
               </div>
-              <ScrollReveal direction="right" delay={0.2}>
+              <GSAPReveal direction="right" delay={0.2}>
                 <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-edge shadow-2xl">
                   <Image
                     src={KITCHEN_IMAGE}
@@ -135,7 +135,7 @@ export function AboutPageContent() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-emerald-brand/20 to-transparent" />
                 </div>
-              </ScrollReveal>
+              </GSAPReveal>
             </div>
           </ScrollReveal>
         </div>
@@ -144,15 +144,15 @@ export function AboutPageContent() {
       {/* Video section */}
       <section className="section-spacing bg-emerald-brand-dark grid-pattern-dark">
         <div className="container-prose">
-          <ScrollReveal direction="up">
+          <GSAPReveal direction="up">
             <SectionHeading
               eyebrow="Our kitchen in action"
               title="See how we bring tradition to your table"
               align="center"
               variant="dark"
             />
-          </ScrollReveal>
-          <ScrollReveal direction="scale" delay={0.2}>
+          </GSAPReveal>
+          <GSAPReveal direction="scale" delay={0.2}>
             <div className="mx-auto mt-10 max-w-4xl">
               <div className="relative aspect-video overflow-hidden rounded-3xl border border-edge/20 shadow-2xl">
                 <video
@@ -168,14 +168,14 @@ export function AboutPageContent() {
                 Watch our kitchen in action—where tradition meets every plate.
               </p>
             </div>
-          </ScrollReveal>
+          </GSAPReveal>
         </div>
       </section>
 
       {/* Halaal certification */}
       <section className="section-spacing bg-emerald-brand text-cream">
         <div className="container-prose">
-          <ScrollReveal direction="up">
+          <GSAPReveal direction="up">
             <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr] md:items-center">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-saffron-soft">
@@ -227,7 +227,7 @@ export function AboutPageContent() {
                     </li>
                   </ul>
                 </div>
-              </ScrollReveal>
+              </GSAPReveal>
             </div>
           </ScrollReveal>
         </div>
@@ -273,10 +273,9 @@ export function AboutPageContent() {
               variant="dark"
             />
           </ScrollReveal>
-          <StaggerContainer className="mt-12 grid gap-6 md:grid-cols-3">
+          <GSAPStagger className="mt-12 grid gap-6 md:grid-cols-3">
             {values.map((value) => (
-              <StaggerItem key={value.title}>
-                <div className="card-dark p-8">
+              <div key={value.title} className="card-dark p-8">
                   <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${value.bg} ${value.color}`}>
                     <value.icon className="h-7 w-7" aria-hidden="true" />
                   </div>
