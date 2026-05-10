@@ -1,3 +1,42 @@
-body { background-color: #000 !important; color: #fff !important;}
-h1, h2, h3, h4, h5, h6, p, span, li { color: #fff !important;}
+/* src/styles/globals.css */
 
+@tailwind base;
+@tailwind components;
+@utilities;
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+/* Force dark theme globally */
+body { 
+  background-color: #000000 !important; 
+  color: #ffffff !important;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Ensure all text elements are white and visible */
+h1, h2, h3, h4, h5, h6, p, span, li, div, section, article { 
+  color: #ffffff !important;
+}
+
+/* Handle links and interactive elements */
+a {
+  color: #ffffff !important;
+  text-decoration: underline;
+}
+
+/* Ensure images and videos aren't hidden by background changes */
+img, video {
+  display: block;
+  max-width: 100%;
+}
+
+/* If you use Tailwind's dark mode, force it to 'dark' */
+.dark {
+  --background: #000000;
+  --foreground: #ffffff;
+}

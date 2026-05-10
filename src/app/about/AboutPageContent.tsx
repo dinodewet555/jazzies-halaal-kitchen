@@ -1,13 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { ShieldCheck, Heart, Users, Play, Sparkles, Award, Clock } from "lucide-react";
+import { ShieldCheck, Heart, Users, Sparkles, Award, Clock } from "lucide-react";
 import { Hero } from "@/components/marketing/Hero";
 import { SectionHeading } from "@/components/marketing/SectionHeading";
 import { HalaalBadge } from "@/components/marketing/HalaalBadge";
 import { CTASection } from "@/components/marketing/CTASection";
 import { Button } from "@/components/ui/Button";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { siteConfig } from "@/data/site-config";
 import { GSAPReveal, GSAPStagger } from "@/components/ui/GSAPAnimations";
 
@@ -19,24 +18,21 @@ const values = [
   {
     icon: ShieldCheck,
     title: "Halaal integrity",
-    body:
-      "Every ingredient is checked. Every supplier is vetted. The kitchen is certified by the MJC and audited regularly.",
+    body: "Every ingredient is checked. Every supplier is vetted. The kitchen is certified by the MJC and audited regularly.",
     color: "text-emerald-brand",
     bg: "bg-emerald-brand/10",
   },
   {
     icon: Heart,
     title: "Family recipes",
-    body:
-      "We measure by hand and taste before we plate. The recipes that left grandma's kitchen come out of ours the same way.",
+    body: "We measure by hand and taste before we plate. The recipes that left grandma's kitchen come out of ours the same way.",
     color: "text-terracotta",
     bg: "bg-terracotta/10",
   },
   {
     icon: Users,
     title: "Community first",
-    body:
-      "Aqeeqahs, janazah meals, madrasah events. We've fed generations of Athlone families and we don't take that lightly.",
+    body: "Aqeeqahs, janazah meals, madrasah events. We've fed generations of Athlone families and we don't take that lightly.",
     color: "text-saffron",
     bg: "bg-saffron/10",
   },
@@ -48,18 +44,24 @@ const highlights = [
     label: "MJC Certified",
     value: "100%",
     description: "Halaal compliance",
+    color: "text-cream",
+    bg: "bg-white/10",
   },
   {
     icon: Clock,
     label: "Fresh Daily",
     value: "Every",
     description: "Dish made to order",
+    color: "text-cream",
+    bg: "bg-white/10",
   },
   {
     icon: Sparkles,
     label: "Heritage",
     value: "4th",
     description: "Generation recipes",
+    color: "text-cream",
+    bg: "bg-white/10",
   },
 ];
 
@@ -89,7 +91,7 @@ export function AboutPageContent() {
       <section className="border-b border-edge bg-emerald-brand text-cream">
         <div className="container-prose py-12 md:py-16">
           <GSAPStagger className="grid gap-8 md:grid-cols-3">
-            {highlights.map((item, index) => (
+            {highlights.map((item) => (
               <div key={item.label} className="flex flex-col items-center text-center">
                 <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${item.bg} ${item.color}`}>
                   <item.icon className="h-7 w-7" aria-hidden="true" />
@@ -137,7 +139,7 @@ export function AboutPageContent() {
                 </div>
               </GSAPReveal>
             </div>
-          </ScrollReveal>
+          </GSAPReveal>
         </div>
       </section>
 
@@ -200,7 +202,7 @@ export function AboutPageContent() {
                   </p>
                 </div>
               </div>
-              <ScrollReveal direction="right" delay={0.2}>
+              <GSAPReveal direction="right" delay={0.2}>
                 <div className="rounded-3xl border border-cream/20 bg-emerald-brand-dark p-8 md:p-10 shadow-2xl">
                   <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-saffron text-emerald-brand-dark">
                     <ShieldCheck className="h-9 w-9" aria-hidden="true" />
@@ -229,21 +231,21 @@ export function AboutPageContent() {
                 </div>
               </GSAPReveal>
             </div>
-          </ScrollReveal>
+          </GSAPReveal>
         </div>
       </section>
 
       {/* Cape Malay heritage */}
       <section className="section-spacing bg-cream-warm">
         <div className="container-prose">
-          <ScrollReveal direction="up">
+          <GSAPReveal direction="up">
             <SectionHeading
               eyebrow="Cape Malay heritage"
               title="Spice, slow time, and Sunday tables"
               align="center"
             />
-          </ScrollReveal>
-          <ScrollReveal direction="up" delay={0.2}>
+          </GSAPReveal>
+          <GSAPReveal direction="up" delay={0.2}>
             <div className="mx-auto mt-8 max-w-3xl space-y-5 text-base leading-relaxed text-ink-muted md:text-lg">
               <p>
                 Cape Malay food carries the layered story of the Cape itself. Spice
@@ -258,44 +260,43 @@ export function AboutPageContent() {
                 given the time it needs, tastes like itself.
               </p>
             </div>
-          </ScrollReveal>
+          </GSAPReveal>
         </div>
       </section>
 
       {/* Values */}
       <section className="section-spacing bg-emerald-brand-dark grid-pattern-dark">
         <div className="container-prose">
-          <ScrollReveal direction="up">
+          <GSAPReveal direction="up">
             <SectionHeading
               eyebrow="What we stand for"
               title="Three things we do not compromise on"
               align="center"
               variant="dark"
             />
-          </ScrollReveal>
+          </GSAPReveal>
           <GSAPStagger className="mt-12 grid gap-6 md:grid-cols-3">
             {values.map((value) => (
-              <div key={value.title} className="card-dark p-8">
-                  <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${value.bg} ${value.color}`}>
-                    <value.icon className="h-7 w-7" aria-hidden="true" />
-                  </div>
-                  <h3 className="mt-5 font-display text-xl text-cream">
-                    {value.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-cream/80">
-                    {value.body}
-                  </p>
+              <div key={value.title} className="rounded-3xl bg-white/5 p-8 border border-white/10">
+                <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${value.bg} ${value.color}`}>
+                  <value.icon className="h-7 w-7" aria-hidden="true" />
                 </div>
-              </StaggerItem>
+                <h3 className="mt-5 font-display text-xl text-cream">
+                  {value.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-cream/80">
+                  {value.body}
+                </p>
+              </div>
             ))}
-          </StaggerContainer>
+          </GSAPStagger>
         </div>
       </section>
 
       {/* Team placeholder */}
       <section className="section-spacing bg-cream">
         <div className="container-prose">
-          <ScrollReveal direction="up">
+          <GSAPReveal direction="up">
             <div className="rounded-3xl border-2 border-dashed border-edge bg-white p-10 text-center md:p-14">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-terracotta">
                 Meet the kitchen
@@ -305,12 +306,12 @@ export function AboutPageContent() {
                 people behind every plate, in their own words.
               </p>
             </div>
-          </ScrollReveal>
+          </GSAPReveal>
         </div>
       </section>
 
       <section className="section-spacing bg-emerald-brand">
-        <ScrollReveal direction="up">
+        <GSAPReveal direction="up">
           <CTASection
             eyebrow="Come and eat with us"
             heading="Tradition tastes better at the table"
@@ -326,7 +327,7 @@ export function AboutPageContent() {
               </>
             }
           />
-        </ScrollReveal>
+        </GSAPReveal>
       </section>
 
       <script
@@ -338,4 +339,5 @@ export function AboutPageContent() {
     </>
   );
 }
-export { AboutPageContent };
+
+export default AboutPageContent;
