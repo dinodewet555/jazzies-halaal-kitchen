@@ -122,7 +122,7 @@ export function AboutPageContent() {
                     Established by Jasmine, a passionate culinary expert from the heart of Cape Town, Jazzies Halaal Kitchen is the realization of a lifelong love for authentic flavors. With a deep heritage rooted in traditional Halaal cuisine, Jasmine has become well-known across the Cape for her commitment to quality and her ability to turn simple ingredients into excellent, soul-warming dishes.
                   </p>
                   <p>
-                    At Jazzies, we believe that food is more than just a meal—it's a celebration of culture and community. Every dish is prepared with the utmost care, ensuring the highest Halaal standards while staying true to the rich, aromatic spices that define our local heritage. Whether we are catering for a special event or serving a family dinner, our mission remains the same: to provide an unforgettable taste of Cape Town, served with love.
+                    At Jazzies, we believe that food is more than just a meal—it&apos;s a celebration of culture and community. Every dish is prepared with the utmost care, ensuring the highest Halaal standards while staying true to the rich, aromatic spices that define our local heritage. Whether we are catering for a special event or serving a family dinner, our mission remains the same: to provide an unforgettable taste of Cape Town, served with love.
                   </p>
                 </div>
               </div>
@@ -191,7 +191,7 @@ export function AboutPageContent() {
                     {siteConfig.certification.description}
                   </p>
                   <p>
-                    Halaal is more than a label for us. It's the trust that lets a
+                    Halaal is more than a label for us. It&apos;s the trust that lets a
                     family book us for an aqeeqah without thinking twice. We hold
                     ourselves to that trust every single shift.
                   </p>
@@ -255,8 +255,8 @@ export function AboutPageContent() {
                 in stew. Sweetness used like seasoning, not dessert.
               </p>
               <p>
-                We cook these dishes the way they were taught to us. We don't
-                shortcut the breyani pot. We don't skip the sambals. Tradition,
+                We cook these dishes the way they were taught to us. We don&apos;t
+                shortcut the breyani pot. We don&apos;t skip the sambals. Tradition,
                 given the time it needs, tastes like itself.
               </p>
             </div>

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useAnimation } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { motion, useInView, useAnimation, useScroll, useTransform } from "framer-motion";
 
 interface ScrollRevealProps {
   children: React.ReactNode;
@@ -61,7 +61,7 @@ export function ScrollReveal({
       initial="hidden"
       animate={controls}
       variants={variants[direction]}
-      transition={{ duration, delay, ease: [0.4, 0, 0.2, 1] }}
+      transition={{ duration, delay, ease: [0.4, 0, 0.2, 1] as const }}
       className={className}
     >
       {children}
@@ -123,7 +123,7 @@ export function StaggerItem({ children, className = "" }: StaggerItemProps) {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] },
+      transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] as const },
     },
   };
 
@@ -160,4 +160,3 @@ export function ParallaxSection({
   );
 }
 
-import { useScroll, useTransform } from "framer-motion";

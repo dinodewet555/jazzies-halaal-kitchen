@@ -15,7 +15,6 @@ interface GSAPRevealProps {
   delay?: number;
   duration?: number;
   className?: string;
-  threshold?: number;
 }
 
 export function GSAPReveal({
@@ -24,7 +23,6 @@ export function GSAPReveal({
   delay = 0,
   duration = 0.8,
   className = "",
-  threshold = 0.1,
 }: GSAPRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -56,7 +54,6 @@ export function GSAPReveal({
         start: "top bottom",
         end: "bottom top",
         toggleActions: "play none none reverse",
-        threshold,
       },
     });
 
@@ -68,7 +65,7 @@ export function GSAPReveal({
         }
       });
     };
-  }, [direction, delay, duration, threshold]);
+  }, [direction, delay, duration]);
 
   return (
     <div ref={ref} className={className}>
@@ -81,14 +78,12 @@ interface GSAPStaggerProps {
   children: React.ReactNode;
   staggerDelay?: number;
   className?: string;
-  threshold?: number;
 }
 
 export function GSAPStagger({
   children,
   staggerDelay = 0.1,
   className = "",
-  threshold = 0.1,
 }: GSAPStaggerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -116,7 +111,6 @@ export function GSAPStagger({
         start: "top bottom",
         end: "bottom top",
         toggleActions: "play none none reverse",
-        threshold,
       },
     });
 
@@ -128,7 +122,7 @@ export function GSAPStagger({
         }
       });
     };
-  }, [staggerDelay, threshold]);
+  }, [staggerDelay]);
 
   return (
     <div ref={containerRef} className={className}>
