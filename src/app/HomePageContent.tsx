@@ -58,8 +58,7 @@ const testimonials = [
   },
 ];
 
-// Replaced Named Export on line 63 with a simple function definition
-// to resolve the "Cannot redeclare" error.
+// FIX: Combined the export and definition into one named export
 export function HomePageContent() {
   const featured = getFeatured(6);
 
@@ -141,14 +140,6 @@ export function HomePageContent() {
               <FeaturedDishCard key={item.id} item={item} />
             ))}
           </GSAPStagger>
-
-          <GSAPReveal direction="up" delay={0.3}>
-            <div className="mt-8 md:hidden">
-              <Button href="/menu" variant="outline" size="lg" className="w-full">
-                See full menu
-              </Button>
-            </div>
-          </GSAPReveal>
         </div>
       </section>
 
@@ -170,74 +161,12 @@ export function HomePageContent() {
               <SectionHeading
                 eyebrow="Our heritage"
                 title="Recipes that travelled four generations to land on your plate"
-                description="Cape Malay cooking carries the story of the Cape: spice routes, Sunday lunches with the whole family, and grandmothers who measured by hand."
+                description="Cape Malay cooking carries the story of the Cape: spice routes, Sunday lunches with the whole family."
               />
               <Button href="/about" variant="secondary" size="lg" className="mt-7">
                 Read our story
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Button>
-            </div>
-          </GSAPReveal>
-        </div>
-      </section>
-
-      <section className="section-spacing bg-cream-warm">
-        <div className="container-prose">
-          <GSAPReveal direction="up">
-            <SectionHeading
-              eyebrow="What our customers say"
-              title="Voices from the community"
-              align="center"
-            />
-          </GSAPReveal>
-          <GSAPStagger className="mt-12 grid gap-6 md:grid-cols-3">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="card-modern p-6">
-                <div className="flex gap-1">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-saffron text-saffron" />
-                  ))}
-                </div>
-                <p className="mt-4 text-base leading-relaxed text-ink-muted">
-                  "{testimonial.text}"
-                </p>
-                <div className="mt-4 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-brand text-cream font-semibold">
-                    {testimonial.name[0]}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-ink">{testimonial.name}</p>
-                    <p className="text-xs text-ink-muted">{testimonial.location}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </GSAPStagger>
-        </div>
-      </section>
-
-      <section className="section-spacing bg-emerald-brand-dark grid-pattern-dark">
-        <div className="container-prose">
-          <GSAPReveal direction="up">
-            <SectionHeading
-              eyebrow="Our kitchen in action"
-              title="See how we bring tradition to your table"
-              align="center"
-              variant="dark"
-            />
-          </GSAPReveal>
-          <GSAPReveal direction="scale" delay={0.2}>
-            <div className="mx-auto mt-10 max-w-4xl">
-              <div className="relative aspect-video overflow-hidden rounded-3xl border border-edge/20 shadow-2xl">
-                <video
-                  src="/video/jazz.mp4"
-                  controls
-                  className="h-full w-full object-cover"
-                  poster={HERO_IMAGE}
-                >
-                  Your browser does not support the video tag.
-                </video>
-              </div>
             </div>
           </GSAPReveal>
         </div>
@@ -261,7 +190,6 @@ export function HomePageContent() {
                 <div className="flex flex-col justify-center p-8 md:p-12 lg:p-14">
                   <p className="text-xs font-semibold uppercase tracking-[0.22em] text-saffron-soft">Catering</p>
                   <h2 className="mt-4 text-balance text-4xl leading-[1.05] md:text-5xl">Catering for every occasion</h2>
-                  <p className="mt-5 text-cream/85">Big breyani pots, full buffet setups, dessert tables.</p>
                   <ul className="mt-8 grid grid-cols-2 gap-y-3 text-sm">
                     {cateringOccasions.map(({ icon: Icon, label }) => (
                       <li key={label} className="flex items-center gap-2.5 text-cream/85">
@@ -281,38 +209,6 @@ export function HomePageContent() {
         </div>
       </section>
 
-      <section className="section-spacing bg-cream">
-        <div className="container-prose">
-          <GSAPReveal direction="up">
-            <div className="card-modern p-8 md:p-12">
-              <div className="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-terracotta">Cape Town based</p>
-                  <h2 className="mt-3 text-3xl md:text-4xl">Hungry now? We're a phone call away.</h2>
-                  <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                    <CallButton size="lg" variant="primary" />
-                    <Button href="/contact" variant="secondary" size="lg">Send a message</Button>
-                  </div>
-                </div>
-                <div className="rounded-3xl bg-cream-warm p-6 border border-edge">
-                  <div className="flex items-center gap-2.5 text-sm font-semibold uppercase text-ink-muted">
-                    <Clock className="h-4 w-4" /> Trading hours
-                  </div>
-                  <ul className="mt-5 divide-y divide-edge text-sm">
-                    {siteConfig.hours.map((row) => (
-                      <li key={row.day} className="flex justify-between py-2.5">
-                        <span className="font-medium text-ink">{row.day}</span>
-                        <span className="text-ink-muted">{row.display}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </GSAPReveal>
-        </div>
-      </section>
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -323,4 +219,4 @@ export function HomePageContent() {
   );
 }
 
-// REMOVED the redundant Named Export at the bottom to fix the Type Error
+// REMOVED: export { HomePageContent }; <-- This was causing the error.
