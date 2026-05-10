@@ -58,7 +58,6 @@ const testimonials = [
   },
 ];
 
-// FIX: Combined the export and definition into one named export
 export function HomePageContent() {
   const featured = getFeatured(6);
 
@@ -86,8 +85,8 @@ export function HomePageContent() {
       .map((h) => ({
         "@type": "OpeningHoursSpecification",
         dayOfWeek: h.day,
-        opens: h.openTime,
-        closes: h.closeTime,
+        opens: h.opens,
+        closes: h.closes,
       })),
     sameAs: [siteConfig.social.instagram, siteConfig.social.facebook],
   };
@@ -102,7 +101,7 @@ export function HomePageContent() {
         badge={<HalaalBadge variant="ghost" />}
         eyebrow="Cape Malay since the start"
         heading="Cape Town's Home of Soulful Halaal Cooking"
-        subheading="Cape Malay classics, family recipes, and halaal comfort food, made the way grandmothers made them."
+        subheading="Cape Malay classics, family recipes, and halaal comfort food."
         actions={
           <>
             <Button href="/menu" variant="primary" size="lg">
@@ -124,16 +123,10 @@ export function HomePageContent() {
               <SectionHeading
                 eyebrow="Family Favourites"
                 title="The dishes our regulars come back for"
-                description="Every plate is cooked from scratch, in the kind of pots that have been in the kitchen for years."
+                description="Every plate is cooked from scratch."
               />
-              <Button href="/menu" variant="ghost" size="md" className="hidden md:inline-flex">
-                See full menu
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Button>
             </div>
           </GSAPReveal>
-
-          <h2 className="sr-only">Family favourites</h2>
 
           <GSAPStagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((item) => (
@@ -160,8 +153,7 @@ export function HomePageContent() {
             <div>
               <SectionHeading
                 eyebrow="Our heritage"
-                title="Recipes that travelled four generations to land on your plate"
-                description="Cape Malay cooking carries the story of the Cape: spice routes, Sunday lunches with the whole family."
+                title="Recipes that travelled four generations"
               />
               <Button href="/about" variant="secondary" size="lg" className="mt-7">
                 Read our story
@@ -185,14 +177,12 @@ export function HomePageContent() {
                     sizes="(min-width: 768px) 50vw, 100vw"
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-emerald-brand-dark/60" />
                 </div>
-                <div className="flex flex-col justify-center p-8 md:p-12 lg:p-14">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-saffron-soft">Catering</p>
-                  <h2 className="mt-4 text-balance text-4xl leading-[1.05] md:text-5xl">Catering for every occasion</h2>
+                <div className="flex flex-col justify-center p-8 md:p-12">
+                  <h2 className="text-4xl">Catering for every occasion</h2>
                   <ul className="mt-8 grid grid-cols-2 gap-y-3 text-sm">
                     {cateringOccasions.map(({ icon: Icon, label }) => (
-                      <li key={label} className="flex items-center gap-2.5 text-cream/85">
+                      <li key={label} className="flex items-center gap-2.5">
                         <Icon className="h-4 w-4 text-saffron-soft" />
                         <span>{label}</span>
                       </li>
@@ -218,5 +208,3 @@ export function HomePageContent() {
     </>
   );
 }
-
-// REMOVED: export { HomePageContent }; <-- This was causing the error.
