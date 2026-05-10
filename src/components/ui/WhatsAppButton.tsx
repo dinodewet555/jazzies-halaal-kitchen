@@ -33,7 +33,7 @@ export function WhatsAppButton({
       className={className}
       aria-label={ariaLabel ?? (iconOnly ? "WhatsApp us" : undefined)}
     >
-      <MessageCircle className="h-4 w-4" aria-hidden="true" />
+      <MessageCircle className="h-5 w-5" aria-hidden="true" />
       {!iconOnly && <span>{label}</span>}
     </Button>
   );

@@ -4,25 +4,29 @@ import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes } from
 import { cn } from "@/lib/utils/cn";
 
 const buttonStyles = cva(
-  "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-brand focus-visible:ring-offset-2 focus-visible:ring-offset-cream disabled:pointer-events-none disabled:opacity-60",
+  "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron focus-visible:ring-offset-2 focus-visible:ring-offset-emerald-brand disabled:pointer-events-none disabled:opacity-60 relative overflow-hidden",
   {
     variants: {
       variant: {
         primary:
-          "bg-emerald-brand text-cream hover:bg-emerald-brand-dark active:bg-emerald-brand-dark",
+          "bg-gradient-to-r from-terracotta to-saffron text-white hover:shadow-xl hover:shadow-terracotta/30 hover:-translate-y-0.5 active:translate-y-0",
         secondary:
-          "bg-terracotta text-cream hover:bg-terracotta-soft active:bg-terracotta-soft",
+          "bg-white text-emerald-brand hover:bg-cream-warm hover:shadow-lg active:translate-y-0",
         outline:
-          "border border-emerald-brand text-emerald-brand hover:bg-emerald-brand hover:text-cream",
-        ghost: "text-emerald-brand hover:bg-emerald-brand/10",
+          "border-2 border-white text-white hover:bg-white hover:text-emerald-brand active:translate-y-0",
+        ghost: "text-white hover:bg-white/10 active:bg-white/20",
         whatsapp:
-          "bg-[#25D366] text-white hover:bg-[#1ebe5a] active:bg-[#1ebe5a]",
+          "bg-[#25D366] text-white hover:bg-[#1ebe5a] hover:shadow-lg hover:shadow-[#25D366]/30 hover:-translate-y-0.5 active:translate-y-0",
+        dark:
+          "bg-emerald-brand text-white hover:bg-emerald-brand-light hover:shadow-lg active:translate-y-0",
+        cream:
+          "bg-cream text-emerald-brand hover:bg-cream-warm hover:shadow-lg active:translate-y-0",
       },
       size: {
-        sm: "h-9 px-3.5 text-sm",
-        md: "h-11 px-5 text-sm",
-        lg: "h-12 px-6 text-base",
-        xl: "h-14 px-8 text-lg",
+        sm: "h-10 px-4 text-sm",
+        md: "h-12 px-5 text-sm",
+        lg: "h-14 px-6 text-base",
+        xl: "h-16 px-8 text-lg",
       },
     },
     defaultVariants: {

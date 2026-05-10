@@ -14,15 +14,15 @@ interface HalaalBadgeProps {
 // consistency with the rest of the site.
 export function HalaalBadge({ variant = "solid", className, showCertNumber = false }: HalaalBadgeProps) {
   const styles = {
-    solid: "bg-halaal text-cream",
-    soft: "bg-cream text-halaal border border-halaal/20",
-    ghost: "bg-white/85 text-halaal backdrop-blur",
+    solid: "bg-halaal text-cream shadow-lg shadow-halaal/25",
+    soft: "bg-cream text-halaal border-2 border-halaal/20",
+    ghost: "bg-white/90 text-halaal backdrop-blur-sm border border-halaal/10",
   } as const;
 
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider",
+        "inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all hover:scale-105",
         styles[variant],
         className
       )}
@@ -33,7 +33,7 @@ export function HalaalBadge({ variant = "solid", className, showCertNumber = fal
       <span>{siteConfig.certification.bodyShort} Halaal Certified</span>
       {showCertNumber && (
         <span className="ml-1 text-[10px] font-normal opacity-80">
-          {siteConfig.certification.number}
+          #{siteConfig.certification.number}
         </span>
       )}
     </div>

@@ -31,7 +31,7 @@ export function CallButton({
       className={className}
       aria-label={ariaLabel ?? (iconOnly ? `Call ${siteConfig.name}` : undefined)}
     >
-      <Phone className="h-4 w-4" aria-hidden="true" />
+      <Phone className="h-5 w-5" aria-hidden="true" />
       {!iconOnly && <span>{label}</span>}
     </Button>
   );

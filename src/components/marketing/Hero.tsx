@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { type ReactNode } from "react";
 import { cn } from "@/lib/utils/cn";
+import { ArrowRight, Play } from "lucide-react";
 
 interface HeroProps {
   imageSrc: string;
@@ -35,21 +36,45 @@ export function Hero({
   priority = false,
 }: HeroProps) {
   const heightClass = {
-    tall: "min-h-[78vh] md:min-h-[680px]",
-    regular: "min-h-[58vh] md:min-h-[520px]",
-    short: "min-h-[40vh] md:min-h-[360px]",
+    tall: "min-h-[85vh] md:min-h-[750px]",
+    regular: "min-h-[65vh] md:min-h-[580px]",
+    short: "min-h-[45vh] md:min-h-[400px]",
   }[height];
 
   return (
     <section
       className={cn(
-        "relative isolate flex w-full items-end overflow-hidden",
+        "relative isolate flex w-full items-center overflow-hidden",
         heightClass
       )}
     >
-      {videoSrc ? (
-        <>
-          {/* Poster image renders immediately, before the video can load. */}
+      {/* Background */}
+      <div className="absolute inset-0">
+        {videoSrc ? (
+          <>
+            <Image
+              src={imageSrc}
+              alt={imageAlt}
+              fill
+              priority={priority}
+              sizes="100vw"
+              className="object-cover"
+            />
+            <video
+              src={videoSrc}
+              poster={imageSrc}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full object-cover"
+            >
+              <source src={videoSrc} type={videoType} />
+            </video>
+          </>
+        ) : (
           <Image
             src={imageSrc}
             alt={imageAlt}
@@ -58,51 +83,48 @@ export function Hero({
             sizes="100vw"
             className="object-cover"
           />
-          <video
-            src={videoSrc}
-            poster={imageSrc}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-hidden="true"
-            className="absolute inset-0 h-full w-full object-cover"
-          >
-            <source src={videoSrc} type={videoType} />
-          </video>
-        </>
-      ) : (
-        <Image
-          src={imageSrc}
-          alt={imageAlt}
-          fill
-          priority={priority}
-          sizes="100vw"
-          className="object-cover"
-        />
-      )}
-      <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/40 to-ink/10" aria-hidden="true" />
+        )}
+        {/* Modern gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-brand/90 via-emerald-brand/70 to-emerald-brand/90" aria-hidden="true" />
+        {/* Subtle pattern overlay */}
+        <div className="absolute inset-0 grid-pattern-dark opacity-30" aria-hidden="true" />
+      </div>
 
-      <div className="container-prose relative z-10 w-full pb-12 pt-32 md:pb-16 md:pt-24">
-        <div className="max-w-3xl text-cream">
-          {badge && <div className="mb-5">{badge}</div>}
+      {/* Content */}
+      <div className="container-prose relative z-10 w-full py-20 md:py-24">
+        <div className="max-w-4xl text-cream">
+          {badge && (
+            <div className="mb-6 inline-flex">
+              {badge}
+            </div>
+          )}
           {eyebrow && (
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-saffron-soft">
+            <p className="mb-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-saffron-soft">
+              <span className="h-px w-8 bg-gradient-to-r from-transparent to-saffron-soft" />
               {eyebrow}
+              <span className="h-px w-8 bg-gradient-to-l from-transparent to-saffron-soft" />
             </p>
           )}
-          <h1 className="text-balance text-4xl font-semibold leading-[1.05] text-cream md:text-6xl lg:text-7xl">
+          <h1 className="text-balance text-5xl font-bold leading-[1.05] text-cream md:text-6xl lg:text-7xl">
             {heading}
           </h1>
           {subheading && (
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-cream/90 md:text-lg">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-cream/90 md:text-xl">
               {subheading}
             </p>
           )}
           {actions && (
-            <div className="mt-8 flex flex-wrap gap-3">{actions}</div>
+            <div className="mt-10 flex flex-wrap gap-4">
+              {actions}
+            </div>
           )}
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+        <div className="flex h-12 w-6 items-center justify-center rounded-full border-2 border-cream/30">
+          <div className="h-2 w-1 rounded-full bg-cream/50" />
         </div>
       </div>
     </section>
