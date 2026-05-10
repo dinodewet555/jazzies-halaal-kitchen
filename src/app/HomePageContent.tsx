@@ -85,8 +85,8 @@ export function HomePageContent() {
       .map((h) => ({
         "@type": "OpeningHoursSpecification",
         dayOfWeek: h.day,
-        opens: h.opens,
-        closes: h.closes,
+        opens: h.openTime, // FIXED: Changed from h.opens to h.openTime
+        closes: h.closeTime, // FIXED: Changed from h.closes to h.closeTime
       })),
     sameAs: [siteConfig.social.instagram, siteConfig.social.facebook],
   };
@@ -96,12 +96,12 @@ export function HomePageContent() {
       <Hero
         imageSrc={HERO_IMAGE}
         videoSrc={HERO_VIDEO}
-        imageAlt="Aromatic Cape Malay chicken breyani served with sambals"
+        imageAlt="Aromatic Cape Malay chicken breyani"
         priority
         badge={<HalaalBadge variant="ghost" />}
         eyebrow="Cape Malay since the start"
         heading="Cape Town's Home of Soulful Halaal Cooking"
-        subheading="Cape Malay classics, family recipes, and halaal comfort food."
+        subheading="Cape Malay classics and family recipes."
         actions={
           <>
             <Button href="/menu" variant="primary" size="lg">
